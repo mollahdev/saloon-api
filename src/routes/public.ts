@@ -1,23 +1,15 @@
-/**
- * Express dependencies 
- */ 
-import { Response, Request } from 'express';
-/**
- * Internal dependencies 
- */ 
 import Routers from '../base/routers';
+import Services from '../modules/services';
 
 export default class PublicRoutes extends Routers {
-    
-    private test(_req: Request, res: Response) {
-        res.json({
-            name: 'hello world'
-        })
+
+    private servicesHandler() {
+        this.router.get('/service/all', Services.getAll);
+        this.router.get('/service/:id', Services.getSingle);
     }
 
     init() {
-        this.router.get('/', this.test);
-
+        this.servicesHandler();
         return this.router
     }
 }

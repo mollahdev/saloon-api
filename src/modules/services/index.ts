@@ -2,7 +2,7 @@ import { Response, Request } from 'express';
 import mongoose from 'mongoose';
 import schema from './schema';
 
-const Service = mongoose.model("Service", schema);
+const ServiceModel = mongoose.model("Service", schema);
 
 export default class Services {
 
@@ -16,7 +16,7 @@ export default class Services {
             __v: 0
         }
 
-        Service.find( filter, exclude, (err: Error, data: any) => {
+        ServiceModel.find( filter, exclude, (err: Error, data: any) => {
             if( err ) {
                 res.status(404).send({
                     code: 404,
@@ -41,7 +41,7 @@ export default class Services {
             __v: 0
         }
 
-        Service.find( {_id: req.params.id, ...filter}, exclude, (err: Error, data: any) => {
+        ServiceModel.find( {_id: req.params.id, ...filter}, exclude, (err: Error, data: any) => {
             if( err ) {
                 res.status(404).send({
                     code: 404,
@@ -58,7 +58,7 @@ export default class Services {
     }
 
     static async create( req: Request, res: Response ) {
-        const db = new Service( req.body );
+        const db = new ServiceModel( req.body );
         await db.save( (err, room) => {
             if( err ) {
                 res.status(500).send({
@@ -76,7 +76,7 @@ export default class Services {
     }
 
     static update( req: Request, res: Response ) {
-        Service.updateOne({_id: req.params.id}, {$set: req.body}, function(err: Error) {
+        ServiceModel.updateOne({_id: req.params.id}, {$set: req.body}, function(err: Error) {
             if( err ) {
                 res.status(500).send({
                     code: 500,

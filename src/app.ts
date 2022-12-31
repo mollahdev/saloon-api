@@ -19,9 +19,10 @@ class App extends ExpressApi {
         super();
 
         this.connectDB();
-        this.api.use( express.json() )
-        this.api.use('/public', publicRoutes.init() )
-        this.api.use('/private', privateRoutes.init() )
+        this.api.use( express.json() );
+        this.api.use('/file', express.static('uploads'))
+        this.api.use('/public', publicRoutes.init() );
+        this.api.use('/private', privateRoutes.init() );
         this.api.listen( this.port, this.listenCallback.bind(this) );
     }
 

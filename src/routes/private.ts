@@ -2,14 +2,12 @@
  * Express/External dependencies 
  */ 
 import { Response, Request } from 'express';
-
 /**
  * Internal dependencies 
  */ 
 import Routers from '../base/routers';
 import Media from '../modules/media';
 import Services from '../modules/services';
-
 
 export default class PrivateRoutes extends Routers {
 
@@ -36,12 +34,14 @@ export default class PrivateRoutes extends Routers {
 
     private mediaHandler() {
         const media = new Media();
-        this.router.post('/media', media.uploader.array('files', 10), media.upload);
+        this.router.post('/media', media.uploader.array('files', 150), media.upload);
+        this.router.delete('/media', media.delete);
+        this.router.get('/media', media.getAll);
+        this.router.get('/media/:id', media.getSingle);
         this.router.use( media.errorHandler );
     }
    
     init() {
-        
         this.mediaHandler();
         this.servicesHandler();
         this.appointmentsHandler();
